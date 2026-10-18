@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0a0f1d"><meta name="description" content="RelaxGram — личные сообщения"><link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231e2548'/><path fill='%23b9aaff' d='M45.6 19.5A29 29 0 1 0 77.5 59.5A26 26 0 0 1 45.6 19.5Z'/><path fill='%23b9aaff' d='M24.5 83L27 62L47 76Z'/><circle cx='70.8' cy='57.2' r='2.7' fill='%23b9aaff'/></svg>"><title>RelaxGram — личные сообщения</title>
+
+<style>
+:root{color-scheme:dark;--bg:#0a1020;--panel:#111b2e;--panel2:#17243a;--line:#263650;--text:#f3f6ff;--muted:#9aaac4;--accent:#7c5cff;--accent2:#28c8a7;--bubble:#1b2940;--mine:#40358a;--danger:#ffb8b8;--shadow:0 24px 80px #0005}
+*{box-sizing:border-box}body{margin:0;min-height:100dvh;background:radial-gradient(ellipse at 10% 0%,#1c2450 0,transparent 42%),radial-gradient(ellipse at 100% 100%,#0d473f 0,transparent 38%),var(--bg);color:var(--text);font:15px Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input{font:inherit}button{cursor:pointer;border:0;color:white;background:linear-gradient(135deg,var(--accent),#5b8cff);border-radius:12px;padding:11px 15px;font-weight:750;box-shadow:0 7px 20px #6f5cff26;transition:transform .15s,filter .15s}button:hover{filter:brightness(1.08);transform:translateY(-1px)}button:disabled{opacity:.45;cursor:default;transform:none;box-shadow:none}
+input{width:100%;min-width:0;border:1px solid #30405c;background:#0c1526;color:var(--text);border-radius:12px;padding:12px 13px;outline:none;transition:border .15s,box-shadow .15s}input:focus{border-color:#8c79ff;box-shadow:0 0 0 3px #7c5cff22}input::placeholder{color:#71819e}
+.app{max-width:1240px;min-height:100dvh;margin:auto;padding:24px;display:grid;grid-template-columns:340px minmax(0,1fr);gap:18px}.sidebar,.main{min-width:0;overflow:hidden;border:1px solid #293753;border-radius:24px;background:#111b2eeF;box-shadow:var(--shadow);backdrop-filter:blur(18px)}.sidebar{display:flex;flex-direction:column;min-height:calc(100dvh - 48px)}
+header{padding:23px 20px 19px;display:flex;align-items:center;gap:13px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#1d2a48,#121d31)}.logo{width:48px;height:48px;flex-shrink:0;display:grid;place-items:center;border-radius:16px;background:linear-gradient(145deg,#8d70ff,#4b83ff 65%,#35d9bd);box-shadow:0 9px 28px #5d64ff45;font-size:25px;font-weight:950;color:white}.brand{min-width:0;flex:1}h1{margin:0;font-size:22px;letter-spacing:-.7px;font-weight:850}.brand .sub{margin-top:4px}.sub{font-size:12px;color:var(--muted);line-height:1.45}.connection{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#a9f4df}.connection:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent2);box-shadow:0 0 12px #28c8a7aa}
+.section{padding:17px 16px;border-bottom:1px solid var(--line)}.label{margin:0 0 9px;color:#c3cde0;font-size:12px;font-weight:800;letter-spacing:.4px;text-transform:uppercase}.row{display:flex;gap:8px}.row input{flex:1}.row button{padding:10px 13px}.helper{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.45}.status{font-size:12px;color:var(--muted);padding:9px 1px 0;min-height:22px;line-height:1.45}.listhead{padding:18px 17px 10px;display:flex;align-items:center;justify-content:space-between}.listhead .label{margin:0}.count{font-size:11px;color:#c3b9ff;background:#31295b;border:1px solid #51458d;padding:4px 8px;border-radius:99px}.userlist{overflow:auto;flex:1;padding:0 8px 10px}.useritem{display:flex;align-items:center;gap:11px;padding:12px;border:1px solid transparent;border-radius:15px;cursor:pointer;transition:background .15s,border .15s}.useritem:hover{background:#1b2940}.useritem.active{background:#272849;border-color:#4b4380}.avatar{position:relative;width:42px;height:42px;flex-shrink:0;display:grid;place-items:center;border-radius:15px;background:linear-gradient(145deg,#374f79,#5a4ca2);font-size:16px;font-weight:850;color:white}.avatar.is-online:after{content:'';position:absolute;right:-2px;bottom:-2px;width:12px;height:12px;border:2px solid var(--panel);border-radius:50%;background:#22c55e;box-sizing:content-box}.avatar img{width:100%;height:100%;object-fit:cover;border-radius:inherit}.top .avatar.is-online:after{width:13px;height:13px}.peer-presence{font-size:12px;color:var(--muted);margin-top:3px}.peer-presence.online{color:#22c55e}.uinfo{min-width:0;flex:1}.uname{font-weight:750;overflow-wrap:anywhere}.handle{font-size:12px;color:var(--muted);margin-top:3px;overflow-wrap:anywhere}.empty{margin:auto;max-width:330px;color:var(--muted);text-align:center;line-height:1.7;padding:26px}.main{display:flex;flex-direction:column;min-height:calc(100dvh - 48px);background:linear-gradient(180deg,#131f34f5,#101a2df7)}.top{min-height:86px;padding:18px 22px;display:flex;align-items:center;gap:13px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#1b2940,#141f33)}.top .avatar{width:48px;height:48px;border-radius:17px}.top .heading{min-width:0;flex:1}.top .uname{font-size:17px}.pill{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;border:1px solid #285d55;background:#12382f;color:#a9f4df;border-radius:99px;padding:7px 10px;font-size:11px;font-weight:750}.pill:before{content:"";width:6px;height:6px;border-radius:50%;background:#28c8a7}
+.notice{display:flex;align-items:flex-start;gap:10px;padding:13px 20px;border-bottom:1px solid var(--line);font-size:12px;color:#bac7dc;line-height:1.5;background:#121d30}.lockicon{width:28px;height:28px;flex-shrink:0;border-radius:9px;background:#203d3c;color:#75e4ca;display:grid;place-items:center;font-size:15px}.security{margin:14px 18px 0;padding:11px 13px;border:1px solid #2d4d51;background:#112a30;border-radius:13px;color:#b3f1e1;font-size:12px;line-height:1.5}.security.wait{border-color:#51447f;background:#211d3b;color:#d4ccff}.security.warn{border-color:#6d4e36;background:#34251b;color:#ffd4a9}#messages{flex:1;overflow-y:auto;padding:22px;display:flex;flex-direction:column;gap:11px;min-height:240px}.msg{max-width:78%;align-self:flex-start;background:var(--bubble);border:1px solid #2a3a56;border-radius:17px 17px 17px 5px;padding:10px 13px;overflow-wrap:anywhere;white-space:pre-wrap;box-shadow:0 5px 18px #0001}.msg.mine{align-self:flex-end;background:linear-gradient(135deg,#40358a,#343b79);border-color:#5a519f;border-radius:17px 17px 5px 17px}.meta{display:flex;gap:10px;justify-content:space-between;font-size:10px;color:#b6c3dc;margin-bottom:5px}.body{line-height:1.5}.composer{display:flex;gap:10px;padding:15px 18px 18px;border-top:1px solid var(--line);background:#111b2e}.composer input{flex:1}.composer button{min-width:115px}.mediaButton{min-width:0!important;padding:10px 12px!important;background:#263650;box-shadow:none}.filePicker{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;pointer-events:none;left:-10000px}.stickerPanel{position:absolute;bottom:76px;right:18px;z-index:30;display:grid;grid-template-columns:repeat(4,1fr);gap:5px;padding:10px;background:var(--panel);border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow);width:min(260px,80vw)}.stickerPanel button{font-size:27px;padding:7px;background:transparent;box-shadow:none;min-width:0!important}.stickerPanel button:hover{background:var(--panel2);transform:none}.mediaMessage{display:block;max-width:min(360px,65vw);max-height:360px;object-fit:contain;border-radius:10px}.stickerMessage{font-size:56px;line-height:1.2;white-space:normal}.foot{font-size:11px;color:#8192ad;padding:0 20px 13px;line-height:1.45}.hidden{display:none!important}
+.topActions{display:flex;align-items:center;gap:8px;margin-left:auto}.menuWrap{position:relative}.dots{font-size:23px;line-height:1;padding:9px 13px;background:#263650;box-shadow:none}.menuPanel{position:absolute;right:0;top:48px;z-index:20;width:210px;padding:7px;background:#17243a;border:1px solid #344765;border-radius:14px;box-shadow:var(--shadow)}.menuPanel button{display:block;width:100%;text-align:left;margin:3px 0;background:transparent;box-shadow:none;padding:11px;border-radius:9px}.menuPanel button:hover{background:#263650;transform:none}.overlay{position:fixed;inset:0;z-index:100;background:#050914d9;display:grid;place-items:center;padding:18px;backdrop-filter:blur(10px)}.dialog{width:min(100%,440px);max-height:92dvh;overflow:auto;background:var(--panel);border:1px solid #344765;border-radius:22px;padding:24px;box-shadow:var(--shadow)}.dialog h2{margin:0 0 8px;font-size:23px}.dialog p{color:var(--muted);font-size:13px;line-height:1.5}.dialog label{display:block;font-size:12px;font-weight:750;color:#c3cde0;margin:14px 0 7px}.dialogActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:17px}.dialogActions button{flex:1;min-width:115px}.secondary{background:#263650;box-shadow:none}.errorText{min-height:18px;color:#ffb8b8;font-size:12px;margin-top:10px;line-height:1.4}.settingGroup{padding:13px 0;border-bottom:1px solid var(--line)}.settingGroup:last-child{border-bottom:0}.themeChoices{display:flex;gap:8px;flex-wrap:wrap}.themeChoices button{flex:1;min-width:90px}.smallNote{font-size:11px;color:var(--muted);line-height:1.5;margin-top:9px}.profileEditorAvatar{display:flex;align-items:center;gap:16px;margin:18px 0}.profileEditorAvatar>div:last-child{min-width:0;flex:1}.profileEditorAvatar label{margin-top:0}.profileEditorAvatar input{max-width:100%}textarea:focus{outline:2px solid #8c79ff}
+body[data-theme="light"]{--bg:#eef2fb;--panel:#fff;--panel2:#f3f6fc;--line:#d7deeb;--text:#182238;--muted:#5d6b83;--bubble:#edf1fa;--mine:#dcd7ff;color-scheme:light;background:linear-gradient(135deg,#e8edff,#e7faf5)}body[data-theme="light"] .sidebar,body[data-theme="light"] .main{background:#ffffffed;border-color:#d7deeb}body[data-theme="light"] header,body[data-theme="light"] .top{background:linear-gradient(135deg,#edf1ff,#f8faff)}body[data-theme="light"] input{background:#f7f9fe;color:#182238;border-color:#d7deeb}body[data-theme="light"] .notice,body[data-theme="light"] .composer{background:#f5f7fc}body[data-theme="light"] .msg{border-color:#d7deeb;color:#182238}body[data-theme="light"] .msg.mine{background:#e0dcff;border-color:#c1b9ff}body[data-theme="light"] .meta{color:#5d6b83}body[data-theme="light"] .useritem:hover{background:#f0f3fb}body[data-theme="light"] .useritem.active{background:#e7e5ff;border-color:#c1b9ff}body[data-theme="light"] .menuPanel{background:#fff;border-color:#d7deeb}body[data-theme="light"] .menuPanel button{color:#182238}body[data-theme="light"] .menuPanel button:hover{background:#edf1fa}
+body[data-theme="midnight"]{--bg:#03040a;--panel:#0b0d16;--panel2:#121522;--line:#292d40;--text:#f5f5ff;--muted:#a1a5bd;--bubble:#171a2a;--mine:#382c6c;background:radial-gradient(ellipse at 50% 0%,#17102f,transparent 55%),#03040a}
+
+@media(max-width:800px){.app{grid-template-columns:1fr;padding:10px;gap:10px}.sidebar{min-height:auto;border-radius:20px}.main{min-height:65dvh;border-radius:20px}.userlist{max-height:190px;flex:none}.section{padding:13px}.listhead{padding:13px 15px 8px}.top{padding:13px 15px;min-height:74px}.notice{padding:11px 14px}.security{margin:10px 12px 0}#messages{padding:15px;min-height:220px}.composer{padding:11px}.composer button{min-width:auto}.msg{max-width:91%}header{padding:16px}.logo{width:44px;height:44px}}
+@media(max-width:420px){.row button{padding:10px}.composer{gap:7px}.composer input{padding:11px 10px}.composer button{padding:10px 11px}.pill{font-size:0;padding:8px}.pill:before{width:8px;height:8px}.top .sub{max-width:200px}}
+
+/* UX update: fixed app viewport, independent desktop scrolling, Telegram-like mobile navigation */
+html,body{height:100%;overflow:hidden}
+.app{height:100dvh;min-height:0;overflow:hidden;grid-template-rows:minmax(0,1fr)}
+.sidebar,.main{height:calc(100dvh - 48px);min-height:0}
+.sidebar{overflow:hidden}
+.sidebar header,.sidebar .section,.sidebar .listhead{flex-shrink:0}
+.userlist{min-height:0;overscroll-behavior:contain;scrollbar-gutter:stable}
+.main{min-height:0;overflow:hidden}
+#messages{min-height:0;overscroll-behavior:contain;scroll-behavior:smooth}
+.composer,.top,.notice,.security,.foot{flex-shrink:0}
+.section .label{margin-bottom:10px}
+.searchBox{position:relative}
+.searchBox:before{content:'⌕';position:absolute;left:13px;top:7px;font-size:24px;color:var(--muted);pointer-events:none;z-index:1}
+.searchBox input{padding-left:40px;border-radius:14px;background:var(--panel2)}
+.searchHint{font-size:11px;color:var(--muted);margin-top:7px}
+.backButton{display:none;background:#263650;box-shadow:none;padding:9px 12px;font-size:20px;line-height:1}
+body[data-theme="light"] .backButton{background:#e7ebf5;color:#182238}
+@media(max-width:800px){
+ html,body{height:100%;overflow:hidden}
+ .app{display:block;height:100dvh;min-height:0;padding:0;gap:0;overflow:hidden}
+ .sidebar,.main{height:100dvh;min-height:0;border-radius:0;border:0}
+ .sidebar{display:flex;width:100%;}
+ .main{display:none;width:100%;}
+ .app.chat-open .sidebar{display:none}
+ .app.chat-open .main{display:flex}
+ .userlist{max-height:none;flex:1;min-height:0;overflow-y:auto}
+ .section{padding:12px 14px}
+ .listhead{padding:13px 15px 8px}
+ .top{gap:9px;padding:12px 12px;min-height:68px}
+ .backButton{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+ .top .avatar{width:42px;height:42px;border-radius:14px}
+ .topActions{gap:5px}
+ .pill{display:none}
+ #messages{flex:1;min-height:0;padding:13px;overflow-y:auto}
+ .notice{font-size:11px;padding:8px 12px;max-height:70px;overflow:auto}
+ .security{margin:7px 10px 0;padding:8px 10px;font-size:11px}
+ .foot{padding:0 12px 7px;font-size:10px}
+ .composer{padding:9px;gap:7px;padding-bottom:max(9px,env(safe-area-inset-bottom))}
+ .composer button{white-space:nowrap}
+ header{padding:14px 16px}
+}
+
+
+/* RelaxGram layout v2: fixed Telegram-like search, independently scrolling panes */
+html,body{width:100%;height:100%;min-height:0;overflow:hidden;overscroll-behavior:none}
+.app{width:100%;height:100dvh;min-height:0;max-width:1240px;margin:0 auto;padding:24px;display:grid;grid-template-columns:minmax(280px,340px) minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:18px;overflow:hidden}
+.sidebar,.main{height:calc(100dvh - 48px);min-height:0;max-height:calc(100dvh - 48px);overflow:hidden}
+.sidebar{display:flex;flex-direction:column;min-width:0}
+.sidebar>header,.sidebar>.searchSection,.sidebar>.listhead,.sidebar>#sideStatus{flex:0 0 auto}
+.searchSection{position:relative;z-index:2;padding:12px 14px 10px;border-bottom:1px solid var(--line);background:var(--panel);box-shadow:0 5px 14px #00000008}
+.searchBox{position:relative;display:flex;align-items:center;gap:7px}
+.searchBox:before{content:'⌕';position:absolute;left:13px;top:50%;transform:translateY(-52%);font-size:24px;color:var(--muted);pointer-events:none;z-index:1}
+.searchBox input{padding:12px 12px 12px 41px;border-radius:14px;background:var(--panel2);height:46px}
+.searchBox button{width:44px;min-width:44px;height:44px;padding:0;border-radius:14px;font-size:20px;line-height:1;box-shadow:none}
+.searchHint{font-size:11px;color:var(--muted);line-height:1.35;margin:7px 2px 0}
+#searchStatus{padding:5px 2px 0;min-height:0;font-size:11px;overflow-wrap:anywhere}
+.listhead{padding:13px 16px 9px;min-height:42px}
+.userlist{flex:1 1 0;min-height:0;max-height:none;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;scrollbar-gutter:stable;padding:0 8px 10px}
+#sideStatus{padding:7px 14px 10px!important;max-height:56px;overflow:auto;overscroll-behavior:contain}
+.main{display:flex;flex-direction:column;min-width:0;min-height:0}
+.main>.top,.main>.notice,.main>#security,.main>.foot,.main>.composer{flex:0 0 auto}
+#messages{flex:1 1 0;min-height:0;height:auto;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;scroll-behavior:smooth;scrollbar-gutter:stable}
+.composer{padding-bottom:max(15px,env(safe-area-inset-bottom))}
+@media(max-width:800px){
+ html,body{height:100%;overflow:hidden}
+ .app{display:block;width:100%;height:100dvh;min-height:0;max-width:none;padding:0;overflow:hidden}
+ .sidebar,.main{width:100%;height:100dvh;min-height:0;max-height:100dvh;border:0;border-radius:0;box-shadow:none}
+ .sidebar{display:flex}
+ .main{display:none}
+ .app.chat-open .sidebar{display:none}
+ .app.chat-open .main{display:flex}
+ .sidebar>header{padding:14px 16px}
+ .searchSection{padding:10px 13px 9px}
+ .searchHint{font-size:10px}
+ .listhead{padding:12px 15px 8px}
+ .userlist{flex:1 1 0;min-height:0;max-height:none;overflow-y:auto;padding-bottom:calc(10px + env(safe-area-inset-bottom))}
+ #sideStatus{max-height:48px}
+ .main>.top{padding:10px 11px;min-height:64px;gap:8px}
+ .backButton{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+ .top .avatar{width:40px;height:40px;border-radius:13px}
+ .topActions{gap:4px}
+ .pill{display:none}
+ #messages{flex:1 1 0;min-height:0;height:auto;padding:12px;overflow-y:auto}
+ .notice{max-height:66px;overflow:auto;padding:8px 11px;font-size:10px}
+ .security{margin:6px 9px 0;padding:7px 9px;font-size:10px}
+ .foot{padding:0 10px 6px;font-size:10px}
+ .composer{padding:8px 9px max(8px,env(safe-area-inset-bottom));gap:7px}
+ .composer button{min-width:0;white-space:nowrap;padding:10px 12px}
+}
+@media(max-width:380px){.searchBox button{width:40px;min-width:40px}.searchBox input{padding-left:37px}.searchHint{font-size:9px}.top .uname{font-size:15px}}
+
+/* Fix: jump directly to the latest message; avoid animated scroll on chat changes. */
+#messages{scroll-behavior:auto!important;}
+
+/* Desktop: use the entire viewport, without black side gutters. */
+@media(min-width:801px){
+ html,body{width:100%;height:100%;margin:0;overflow:hidden}
+ .app{width:100vw;max-width:none;height:100dvh;min-height:0;margin:0;padding:0;gap:0;grid-template-columns:minmax(280px,320px) minmax(0,1fr);grid-template-rows:minmax(0,1fr)}
+ .sidebar,.main{width:100%;height:100dvh;min-height:0;max-height:100dvh;border-radius:0;box-shadow:none}
+ .sidebar{border-left:0;border-top:0;border-bottom:0}
+ .main{border:0}
+}
+
+/* User-provided RelaxGram logo */
+.brandLogo{display:block;width:min(100%,300px);height:auto;max-height:90px;object-fit:contain;object-position:left center;flex:0 1 300px;border-radius:8px}
+.authLogo{display:block;width:min(100%,360px);height:auto;max-height:135px;object-fit:contain;margin:0 auto 16px;border-radius:8px}
+@media(max-width:800px){.brandLogo{width:min(100%,245px);max-height:68px}.authLogo{max-height:110px}}
+/* RelaxGram visual refresh: deep navy, violet accents, compact chat layout */
+:root{--bg:#080d18;--panel:#0d1422;--panel2:#141c2d;--line:#202a3d;--text:#f2f4fc;--muted:#9baac2;--accent:#7867ff;--accent2:#27c66f;--bubble:#151f31;--mine:#37306f;--shadow:0 18px 55px #0004}
+body{background:#080d18}
+.app{max-width:none;width:100%;padding:0;gap:0;grid-template-columns:300px minmax(0,1fr)}
+.sidebar,.main{height:100dvh;max-height:100dvh;border-radius:0;border:0;box-shadow:none;backdrop-filter:none}
+.sidebar{border-right:1px solid #20283a;background:#0b111e}
+.sidebar>header{padding:25px 22px 24px;background:transparent;border-bottom:1px solid #1b2434;gap:14px}
+.logo{width:58px;height:58px;border-radius:17px;background:linear-gradient(145deg,#242c58,#151a38);box-shadow:none;font-size:0;position:relative;color:transparent}
+.logo:after{content:'☾';font-size:42px;font-weight:500;color:#b8a8ff;line-height:1;transform:rotate(-25deg)}
+h1{font-size:24px;letter-spacing:-.8px;font-weight:750}h1::first-letter{color:inherit}
+.brand .sub{font-size:12px;margin-top:5px}.connection{margin-top:7px;font-size:11px}
+.searchSection{padding:14px 16px 8px;border-bottom:1px solid #1b2434}
+.searchBox{display:flex;gap:6px}.searchBox input{border:0;border-radius:30px;background:#171e2d;padding:13px 16px}.searchBox button{width:42px;flex-shrink:0;padding:8px;border-radius:50%;box-shadow:none}
+.searchHint{display:none}.status{font-size:11px}
+.listhead{padding:15px 18px 9px}.listhead .label{text-transform:none;font-size:14px;letter-spacing:0;color:#dce3f4}.count{background:#29234d;color:#c9c0ff;border:0}
+.userlist{padding:0 8px 10px}.useritem{padding:13px 10px;border-radius:12px;gap:12px;border-bottom:1px solid #1b2432}.useritem:hover{background:#151e2e}.useritem.active{background:#211f45;border-color:#38316d}
+.avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(145deg,#7867ff,#4a72dc);font-size:18px}.avatar img{border-radius:50%}.uname{font-weight:650}.handle{font-size:13px}
+.main{background:#0a101c;position:relative}.top{min-height:78px;background:#0d1422;border-bottom:1px solid #20283a;padding:14px 20px}.top .avatar{width:48px;height:48px;border-radius:50%}.top .uname{font-size:16px}.notice{background:#101a29;border-color:#20283a}.security{border-radius:10px}#messages{background:radial-gradient(ellipse at center,#101729 0%,#0a101c 68%);padding:24px}.composer{background:#0d1422;border-color:#20283a}.composer input{background:#171e2d;border:0;border-radius:26px}.mediaButton,.dots{border-radius:50%;background:#202a40}.foot{padding-bottom:10px}
+.dialog{background:#101827;border-color:#2b3450}.dialog .logo{margin-left:auto;margin-right:auto}
+@media(min-width:801px){.sidebar,.main{height:100dvh;max-height:100dvh}.app{grid-template-columns:300px minmax(0,1fr)}}
+@media(max-width:800px){.app{padding:0;gap:0;grid-template-columns:1fr}.sidebar,.main{height:100dvh;max-height:100dvh;border-radius:0}.sidebar>header{padding:14px 16px}.logo{width:46px;height:46px}.logo:after{font-size:34px}.userlist{max-height:none;flex:1}.main{display:none}.app.chat-open .sidebar{display:none}.app.chat-open .main{display:flex}}
+
+
+/* ===== RelaxGram redesign v3: nav column + chat list + welcome screen ===== */
+body{--navbg:#0a0f1d;--listbg:#0b1121;--mainbg:#0a0f1c;--ln:#161d30;--hover:#111a2e;--act:#151b3d;--ink:#f1f3fb;--sub:#8f9bb5;--pill:#151c2c;--acc:#7468f4;--navtxt:#c8d0e6;--navon:linear-gradient(90deg,#272d72,#1e2354)}
+body[data-theme="light"]{--navbg:#f1f4fb;--listbg:#f8f9fd;--mainbg:#fff;--ln:#e0e5f0;--hover:#eef1fa;--act:#e6e4ff;--ink:#182238;--sub:#5d6b83;--pill:#e9edf6;--navtxt:#36435d;--navon:linear-gradient(90deg,#dcd8ff,#e8e6ff)}
+body[data-theme="midnight"]{--navbg:#04050b;--listbg:#06070e;--mainbg:#03040a;--ln:#1a1d2e;--hover:#0e1020;--act:#15122e;--pill:#101322}
+body{background:var(--mainbg)}
+.moon{display:block;width:100%;height:100%}
+.brandHead{display:flex;align-items:center;gap:18px;padding:0 16px 0 36px;border:0!important;background:transparent!important}
+.brandIcon{flex:0 0 auto;width:clamp(54px,4.8vw,72px);aspect-ratio:73/79;padding:clamp(10px,1vw,14px);border-radius:18px;background:linear-gradient(145deg,#252b5a,#171c44);display:grid;place-items:center}
+body[data-theme="light"] .brandIcon{background:linear-gradient(145deg,#e4e1ff,#d3cfff)}
+.brandName{font-size:clamp(22px,2vw,30px);font-weight:600;letter-spacing:-.6px;color:var(--ink);line-height:1.1}
+.brandName span,.welcomeName span{color:var(--acc);background:linear-gradient(90deg,#8e7dff,#6a5ff0);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.brandTag{margin-top:6px;font-size:13px;color:var(--sub)}
+.sideNav{display:flex;flex-direction:column;gap:6px;padding:0 18px}
+.sideNav button{display:flex;align-items:center;gap:20px;width:100%;height:56px;padding:0 26px;border-radius:12px;background:transparent;box-shadow:none;color:var(--navtxt);font-size:17px;font-weight:500;text-align:left;transform:none;filter:none}
+.sideNav button:hover{background:var(--hover);transform:none;filter:none}
+.sideNav button.on{background:var(--navon);color:var(--ink)}
+.sideNav svg{width:28px;height:28px;flex:0 0 auto;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.sideFoot{display:flex;align-items:center;gap:10px;margin:0 18px;padding:22px 8px 28px;border-top:1px solid var(--ln)}
+.sideFoot .connection{margin:0;font-size:16px;color:var(--navtxt);display:flex;align-items:center;gap:12px}
+.sideFoot .connection:before{content:"";width:11px;height:11px;border-radius:50%;background:#22c55e;flex:0 0 auto}
+#navLogout{margin-left:auto;padding:8px;background:transparent;box-shadow:none;color:var(--sub);border-radius:10px}
+#navLogout:hover{background:var(--hover);transform:none}
+#navLogout svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;display:block}
+.app .searchSection{min-height:95px;display:flex;flex-direction:column;justify-content:center;padding:0 12px 0 8px;border-bottom:1px solid var(--ln);background:transparent;box-shadow:none}
+.app .searchBox{display:flex;align-items:center;gap:0}
+.app .searchBox input{flex:1;height:50px;border:0;border-radius:30px;background:var(--pill);color:var(--ink);padding:0 16px 0 54px;font-size:16px}
+.app .searchBox input::placeholder{color:var(--sub)}
+.app .searchBox:before{content:"";font-size:0;left:20px;width:22px;height:22px;background:var(--sub);-webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'><circle cx='11' cy='11' r='8'/><line x1='21' y1='21' x2='16.65' y2='16.65'/></svg>") center/contain no-repeat;mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'><circle cx='11' cy='11' r='8'/><line x1='21' y1='21' x2='16.65' y2='16.65'/></svg>") center/contain no-repeat}
+.app .searchBox button{width:64px;min-width:64px;height:44px;margin-left:14px;padding:0 0 0 4px;border-radius:0;border-left:1px solid var(--ln);background:transparent;box-shadow:none;color:var(--navtxt);display:grid;place-items:center;transform:none;filter:none}
+.app .searchBox button svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.app .searchBox button:hover{color:var(--acc);transform:none}
+.app #searchStatus:empty{display:none}
+.app .listhead{display:none}
+.app #chats{padding:0;scrollbar-gutter:auto;background:transparent}
+.app .useritem{gap:16px;min-height:98px;padding:16px 22px;border:0;border-bottom:1px solid var(--ln);border-radius:0}
+.app .useritem:hover{background:var(--hover)}
+.app .useritem.active{background:var(--act)}
+.app .avatar{width:62px;height:62px;border-radius:50%;font-size:24px;font-weight:600;background:linear-gradient(145deg,#8b78ff,#6a5ff0)}
+.app .top .avatar{width:48px;height:48px}
+.app .avatar.is-online:after{border-color:var(--listbg)}
+.app .uname{font-size:17px;font-weight:600;color:var(--ink)}
+.app .handle{font-size:15px;color:var(--sub);margin-top:6px}
+.app #sideStatus{color:var(--sub)}
+.app #sideStatus:empty{display:none}
+.welcome{display:none}
+.app:not(.chat-open) .main{align-items:center;justify-content:center;background:var(--mainbg)}
+.app:not(.chat-open) .main>*:not(.welcome){display:none!important}
+.app:not(.chat-open) .welcome{display:flex;flex-direction:column;align-items:center;text-align:center;padding:24px}
+.welcomeIcon{width:140px;height:140px;padding:30px;margin-bottom:20px;border-radius:50%;background:radial-gradient(circle,#1c2255 0,#131840 55%,#0d1226 100%)}
+body[data-theme="light"] .welcomeIcon{background:radial-gradient(circle,#e4e1ff,#f1efff)}
+.welcomeName{font-size:clamp(38px,3.4vw,52px);font-weight:500;letter-spacing:-1.2px;color:var(--ink);line-height:1.1}
+.welcomeTag{margin-top:8px;font-size:20px;color:var(--navtxt)}
+.welcomeHint{margin-top:26px;font-size:17px;color:var(--sub)}
+.app .main{background:var(--mainbg)}
+.app .main>.top{background:var(--listbg);border-bottom:1px solid var(--ln)}
+.app #messages{background:var(--mainbg)}
+.app .notice{background:var(--listbg);border-color:var(--ln)}
+.app .composer{align-items:center;background:var(--listbg);border-top:1px solid var(--ln)}
+.app .composer #text{border:0;border-radius:26px;background:var(--pill);color:var(--ink);padding:14px 18px}
+.app .composer #send{border-radius:26px;background:linear-gradient(135deg,#7c6cff,#6a5ff0)}
+.app .msg.mine{background:linear-gradient(135deg,#5a4fd6,#4a43b4);border-color:transparent;color:#fff}
+@media(min-width:801px){
+.app{grid-template-columns:auto minmax(0,1fr)}
+.app .sidebar{--c1:clamp(230px,19.5vw,300px);--c2:clamp(300px,27.9vw,428px);width:calc(var(--c1) + var(--c2));display:grid;grid-template-columns:var(--c1) var(--c2);grid-template-rows:95px auto minmax(0,1fr) auto;border:0;border-right:1px solid var(--ln);background:linear-gradient(90deg,var(--navbg) calc(var(--c1) - 1px),var(--ln) calc(var(--c1) - 1px) var(--c1),var(--listbg) var(--c1))}
+.app .sidebar>.brandHead{grid-column:1;grid-row:1}
+.app .sidebar>.sideNav{grid-column:1;grid-row:2;margin-top:6px}
+.app .sidebar>.sideFoot{grid-column:1;grid-row:4;margin-right:19px}
+.app .sidebar>.searchSection{grid-column:2;grid-row:1}
+.app .sidebar>#chats{grid-column:2;grid-row:2/4}
+.app .sidebar>#sideStatus{grid-column:2;grid-row:4;padding:8px 16px 12px!important}
+}
+@media(max-width:800px){
+.app .sidebar{display:flex;flex-direction:column;background:var(--listbg)}
+.app .sidebar>.brandHead{order:1;padding:12px 16px;gap:14px;height:auto}
+.app .sidebar>.searchSection{order:2;min-height:78px}
+.app .sidebar>#chats{order:3;flex:1 1 0;min-height:0}
+.app .sidebar>#sideStatus{order:4}
+.app .sidebar>.sideFoot{order:5;margin:0;padding:8px 16px}
+.app .sidebar>.sideNav{order:6;flex-direction:row;gap:4px;padding:6px 8px max(6px,env(safe-area-inset-bottom));border-top:1px solid var(--ln)}
+.sideNav button{flex:1;flex-direction:column;gap:3px;height:auto;padding:8px 4px;font-size:11px;justify-content:center;align-items:center}
+.sideNav svg{width:24px;height:24px}
+.app .avatar{width:52px;height:52px;font-size:20px}
+.app .useritem{min-height:84px;padding:12px 16px}
+}
+
+
+/* logo exactly like reference */
+body{--acc:#8b82f0}
+.brandIcon,body[data-theme="light"] .brandIcon{padding:0;background:none;border-radius:0;aspect-ratio:1/1;width:clamp(54px,4.8vw,72px)}
+.welcomeIcon,body[data-theme="light"] .welcomeIcon{width:128px;height:128px;padding:0;background:none;border-radius:0;margin-bottom:22px}
+.brandName,.welcomeName{font-weight:500}
+.brandName span,.welcomeName span{background:none;-webkit-text-fill-color:currentColor;color:#8b82f0}
+.brandName,.welcomeName{color:#f1f0ea}
+body[data-theme="light"] .brandName,body[data-theme="light"] .welcomeName{color:#182238}
+.brandTag{color:#c9c7bd}
+body[data-theme="light"] .brandTag{color:var(--sub)}
+.authBrand{display:flex;align-items:center;justify-content:center;gap:16px;margin:0 0 18px}
+.authBrand .brandIcon{width:72px}
+.authBrand .brandName{font-size:32px}
+</style></head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="rgG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b3a1ff"/><stop offset="1" stop-color="#6a5ff0"/></linearGradient><symbol id="rgMoon" viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#1e2548"/><path fill="#b9aaff" d="M45.6 19.5A29 29 0 1 0 77.5 59.5A26 26 0 0 1 45.6 19.5Z"/><path fill="#b9aaff" d="M24.5 83L27 62L47 76Z"/><circle cx="70.8" cy="57.2" r="2.7" fill="#b9aaff"/></symbol></defs></svg><div class="app">
+<aside class="sidebar"><header class="brandHead"><div class="brandIcon"><svg class="moon" viewBox="0 0 100 100" aria-hidden="true"><use href="#rgMoon"/></svg></div><div class="brandText"><div class="brandName">relax<span>gram</span></div></div></header><nav class="sideNav" aria-label="Навигация"><button type="button" id="navChats" class="on"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Чаты</span></button><button type="button" id="navProfile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M6.17 18.5a7 7 0 0 1 11.66 0"/></svg><span>Профиль</span></button><button type="button" id="navSettings"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>Настройки</span></button></nav><div class="sideFoot"><div class="connection" id="connection">Подключение…</div><button type="button" id="navLogout" title="Выйти из аккаунта" aria-label="Выйти из аккаунта"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></button></div>
+<div class="searchSection"><div class="searchBox"><input id="search" maxlength="20" placeholder="Поиск чатов..." autocomplete="off" aria-label="Поиск чатов и пользователей"><button id="find" type="button" aria-label="Найти пользователя" title="Найти пользователя по @юзернейму (Enter)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button></div><div class="searchHint">Печатай, чтобы фильтровать чаты. Enter — найти пользователя по юзернейму.</div><div class="status" id="searchStatus" aria-live="polite"></div></div>
+<div class="listhead"><p class="label">Твои переписки</p><span class="count" id="chatCount">Личные</span></div><div id="chats" class="userlist"><div class="empty">Создай юзернейм и найди друга, чтобы начать общение.</div></div><div class="status" id="sideStatus" style="padding:10px 16px 14px"></div></aside>
+<section class="main"><div class="welcome"><div class="welcomeIcon"><svg class="moon" viewBox="0 0 100 100" aria-hidden="true"><use href="#rgMoon"/></svg></div><div class="welcomeName">relax<span>gram</span></div><div class="welcomeHint">Выберите чат или начните новый</div></div><div class="top"><button class="backButton" id="backToChats" type="button" aria-label="Назад к чатам">‹</button><div class="avatar" id="peerAvatar">R</div><div class="heading"><div class="uname" id="peerName">Добро пожаловать в RelaxGram</div><div class="sub" id="peerHandle">Выбери собеседника, чтобы начать чат</div><div class="peer-presence" id="peerPresence" aria-live="polite"></div></div><div class="topActions"><span class="pill">Зашифровано</span><div class="menuWrap"><button class="dots" id="menuButton" aria-label="Открыть меню">⋮</button><div class="menuPanel hidden" id="menuPanel"><button id="openProfile">👤 Мой профиль</button><button id="openSettings">⚙ Настройки</button><button id="changeUsernameMenu">✎ Изменить юзернейм</button><button id="logoutButton">↪ Выйти из аккаунта</button></div></div></div></div>
+<div class="notice"><div class="lockicon">⌑</div><div><strong>Автоматическое шифрование</strong><br>RelaxGram создаёт ключи прямо в браузере. Не нужно придумывать пароль для каждой переписки. Чтобы начать переписку, собеседнику достаточно войти в RelaxGram один раз после обновления — открывать этот чат не нужно.</div></div>
+<div class="security wait" id="security">Ожидание выбора собеседника. Приватные ключи хранятся в этом браузере; сервер получает только открытый ключ.</div>
+<section id="messages" aria-live="polite"><div class="empty">✨<br>Твои личные сообщения будут здесь.<br>Найди человека по юзернейму слева.</div></section><div class="foot" id="hint">Текст сообщений шифруется в браузере. Юзернеймы и время отправки не скрыты.</div>
+<div class="stickerPanel hidden" id="stickerPanel" aria-label="Стикеры"></div><div id="mediaStatus" role="status" aria-live="polite" style="display:none;padding:7px 14px;font-size:12px;color:var(--muted);background:var(--panel)"></div><form class="composer" id="form"><button class="mediaButton" id="attachButton" type="button" title="Отправить изображение или GIF" disabled>📎</button><input id="mediaFile" class="filePicker" type="file" accept="image/*,.gif" aria-label="Выбрать изображение"><button class="mediaButton" id="stickerButton" type="button" title="Стикеры" disabled>😊</button><input id="text" maxlength="1500" placeholder="Написать сообщение…" autocomplete="off" disabled><button id="send" type="submit" disabled>Отправить ↗</button></form></section></div>
+<div class="overlay" id="authOverlay"><section class="dialog" role="dialog" aria-modal="true" aria-labelledby="authTitle"><div class="authBrand"><div class="brandIcon"><svg class="moon" viewBox="0 0 100 100" aria-hidden="true"><use href="#rgMoon"/></svg></div><div class="brandText"><div class="brandName">relax<span>gram</span></div></div></div><h2 id="authTitle">Добро пожаловать в RelaxGram</h2><p id="authDescription">Создай юзернейм и пароль или войди в существующий аккаунт.</p><label for="authUsername">Юзернейм</label><input id="authUsername" maxlength="20" placeholder="например, relax_583" autocomplete="username"><label for="authPassword">Пароль</label><input id="authPassword" type="password" minlength="8" maxlength="128" placeholder="Не менее 8 символов" autocomplete="current-password"><div class="smallNote">Пароль не хранится в базе сообщений. Восстановление пароля пока не подключено — сохрани его в надёжном месте.</div><div class="dialogActions"><button id="registerButton">Создать аккаунт</button><button id="loginButton" class="secondary">Войти</button></div><div class="errorText" id="authError"></div></section></div>
+<div class="overlay hidden" id="profileOverlay"><section class="dialog" role="dialog" aria-modal="true" aria-labelledby="profileTitle"><h2 id="profileTitle">Мой профиль</h2><p>Эти данные увидят другие пользователи RelaxGram.</p><div class="profileEditorAvatar"><div class="avatar" id="profileAvatarPreview" style="width:88px;height:88px;border-radius:28px;font-size:28px">R</div><div><label for="avatarFile">Аватарка</label><input id="avatarFile" type="file" accept="image/*" style="padding:9px;font-size:12px"><div class="smallNote">Изображение автоматически уменьшится. До 5 МБ исходный файл.</div></div></div><label for="profileNickname">Ник (отображаемое имя)</label><input id="profileNickname" maxlength="32" placeholder="Например, Relax User"><label for="profileBio">О себе</label><textarea id="profileBio" maxlength="160" rows="3" placeholder="Пара слов о себе…" style="width:100%;resize:vertical;border:1px solid #30405c;background:#0c1526;color:var(--text);border-radius:12px;padding:12px 13px;font:inherit"></textarea><div class="smallNote"><span id="profileBioCount">0</span>/160 символов. Юзернейм остаётся отдельным и нужен для поиска.</div><div class="dialogActions"><button id="saveProfile">Сохранить профиль</button><button id="closeProfile" class="secondary">Закрыть</button></div><div class="errorText" id="profileError"></div></section></div>
+<div class="overlay hidden" id="settingsOverlay"><section class="dialog" role="dialog" aria-modal="true" aria-labelledby="settingsTitle"><h2 id="settingsTitle">Настройки</h2><p>Настрой RelaxGram под себя.</p><div class="settingGroup"><label for="themeSelect">Тема оформления</label><select id="themeSelect" style="width:100%;padding:12px;border-radius:12px;background:var(--panel2);color:var(--text);border:1px solid var(--line)"><option value="dark">Тёмная — Relax</option><option value="light">Светлая</option><option value="midnight">Полночь</option></select></div><div class="settingGroup"><label for="newUsername">Твой юзернейм</label><input id="newUsername" maxlength="20" placeholder="новый_юзернейм"><div class="smallNote">3–20 символов: латинские буквы, цифры и _. После смены входить нужно будет по новому юзернейму.</div><div class="dialogActions"><button id="saveUsername">Сохранить юзернейм</button></div></div><div class="settingGroup"><label>Безопасность</label><div class="smallNote">Личные сообщения шифруются в браузере. Чтобы тебе написали первым, достаточно один раз войти в RelaxGram после обновления; сам чат открывать не требуется. Ключи привязаны к браузеру/устройству.</div></div><div class="dialogActions"><button id="closeSettings" class="secondary">Закрыть</button></div><div class="errorText" id="settingsError"></div></section></div>
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, deleteUser, updateEmail } from 'https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js';
+import { getDatabase, ref, get, set, remove, runTransaction, serverTimestamp, onChildAdded, onValue, onDisconnect, query, orderByChild, limitToLast } from 'https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js';
+// Заполни конфигурацию Firebase по инструкции README_RU.txt.
+const firebaseConfig={apiKey:'AIzaSyA7L-vfdjr-6b9rdRJuEvv6wcVHff0rSjU',authDomain:'relaxgram-1488.firebaseapp.com',databaseURL:'https://relaxgram-1488-default-rtdb.firebaseio.com',projectId:'relaxgram-1488',appId:'1:780750431406:web:d3eb6b3845bacdee9ab93f'};
+const $=s=>document.querySelector(s), encoder=new TextEncoder(), decoder=new TextDecoder();
+let db,auth=null,user=null,accountSetupInProgress=false,myUsername='',myProfile={nickname:'',bio:'',avatar:''},selectedAvatarData='',activePeer=null,activeChatId='',cryptoKey=null,keyExchangeListener=null,messagesListener=null,chatListLoadToken=0,seen=new Set(),cached=new Map(),first=true,exchangeStartedFor='',peerPresenceListener=null,presenceListeners=[],ownPresenceListener=null,ownPresenceUid='';
+const esc=s=>String(s||'');
+function status(s){$('#connection').textContent=s}
+function say(s){$('#sideStatus').textContent=s}
+function mediaNotice(s,isError=false){const el=$('#mediaStatus');el.textContent=s;el.style.display=s?'block':'none';el.style.color=isError?'#ffb8b8':'var(--muted)'}
+function validUsername(s){return /^[a-zA-Z0-9_]{3,20}$/.test(s)}
+function chatId(a,b){return [a,b].sort().join('__')}
+function showEmpty(t){$('#messages').innerHTML='';const d=document.createElement('div');d.className='empty';d.textContent=t;$('#messages').append(d)}
+function toB64(bytes){let bin='';for(const b of bytes)bin+=String.fromCharCode(b);return btoa(bin)}
+function fromB64(value){const bin=atob(value);return Uint8Array.from(bin,c=>c.charCodeAt(0))}
+async function makeOrLoadKeyPair(id){
+ const storageKey='relaxgram-ecdh-v1:'+id; let saved=null;
+ try{saved=JSON.parse(localStorage.getItem(storageKey)||'null')}catch{}
+ let privateJwk,publicJwk;
+ if(saved?.privateJwk&&saved?.publicJwk){privateJwk=saved.privateJwk;publicJwk=saved.publicJwk}
+ else {const pair=await crypto.subtle.generateKey({name:'ECDH',namedCurve:'P-256'},true,['deriveBits']);privateJwk=await crypto.subtle.exportKey('jwk',pair.privateKey);publicJwk=await crypto.subtle.exportKey('jwk',pair.publicKey);localStorage.setItem(storageKey,JSON.stringify({privateJwk,publicJwk}))}
+ return {privateJwk,publicJwk};
+}
+async function deriveSharedKey(id,privateJwk,peerPublicJwk){
+ const privateKey=await crypto.subtle.importKey('jwk',privateJwk,{name:'ECDH',namedCurve:'P-256'},false,['deriveBits']);
+ const peerPublicKey=await crypto.subtle.importKey('jwk',peerPublicJwk,{name:'ECDH',namedCurve:'P-256'},false,[]);
+ const bits=await crypto.subtle.deriveBits({name:'ECDH',public:peerPublicKey},privateKey,256);
+ const material=await crypto.subtle.importKey('raw',bits,'HKDF',false,['deriveKey']);
+ return crypto.subtle.deriveKey({name:'HKDF',hash:'SHA-256',salt:encoder.encode('RelaxGram-DM-v1:'+id),info:encoder.encode('message-encryption-aes-gcm-256')},material,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);
+}
+async function encryptText(text,key){const iv=crypto.getRandomValues(new Uint8Array(12));const encrypted=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,encoder.encode(text));const packed=new Uint8Array(iv.length+encrypted.byteLength);packed.set(iv);packed.set(new Uint8Array(encrypted),iv.length);return 'enc3:'+toB64(encoder.encode(toB64(packed)))}
+async function decryptText(payload,key){if(!payload.startsWith('enc3:'))throw Error('legacy');const inner=decoder.decode(fromB64(payload.slice(5))),packed=fromB64(inner);if(packed.length<29)throw Error('invalid');const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:packed.slice(0,12)},key,packed.slice(12));return decoder.decode(plain)}
+async function refreshRenderedMessages(){if(!cryptoKey)return;$('#messages').innerHTML='';for(const m of cached.values())await displayMessage(m)}
+async function publishAccountPublicKey(){
+ if(!user||!db)return;
+ const pair=await makeOrLoadKeyPair('account:'+user.uid);
+ await set(ref(db,'userKeys/'+user.uid),{publicKey:pair.publicJwk,updatedAt:serverTimestamp()});
+ return pair;
+}
+async function beginKeyExchange(){
+ if(!activeChatId||!activePeer||!user||exchangeStartedFor===activeChatId)return;
+ exchangeStartedFor=activeChatId;cryptoKey=null;$('#text').disabled=true;$('#send').disabled=true;$('#attachButton').disabled=true;$('#stickerButton').disabled=true;$('#security').className='security wait';$('#security').textContent='Подготавливаем шифрование. Собеседнику достаточно войти в RelaxGram один раз — открывать этот чат не нужно.';
+ if(keyExchangeListener){keyExchangeListener();keyExchangeListener=null}
+ try{
+  const pair=await publishAccountPublicKey();
+  keyExchangeListener=onValue(ref(db,'userKeys/'+activePeer.uid),async snap=>{
+   if(activeChatId!==exchangeStartedFor)return;
+   if(!snap.exists()||!snap.val()?.publicKey){cryptoKey=null;$('#text').disabled=true;$('#send').disabled=true;$('#attachButton').disabled=true;$('#stickerButton').disabled=true;$('#security').className='security wait';$('#security').textContent='Ждём, пока собеседник хотя бы один раз войдёт в RelaxGram после обновления. Открывать этот чат ему не нужно.';return}
+   try{cryptoKey=await deriveSharedKey(activeChatId,pair.privateJwk,snap.val().publicKey);$('#security').className='security';$('#security').textContent='🔒 Шифрование включено. Можно написать первым — собеседнику не нужно открывать этот чат заранее.';$('#text').disabled=false;$('#send').disabled=false;$('#attachButton').disabled=false;$('#stickerButton').disabled=false;await refreshRenderedMessages()}
+   catch(e){cryptoKey=null;$('#security').className='security warn';$('#security').textContent='Не удалось согласовать ключ. Обнови страницу и войди снова.'}
+  });
+ }catch(e){$('#security').className='security warn';$('#security').textContent='Не удалось создать ключ: '+e.message+' Проверь правила Firebase.';say('Ошибка обмена ключами: '+e.message)}
+}
+function renderMessage(m){const div=document.createElement('article');div.className='msg'+(user&&m.uid===user.uid?' mine':'');const meta=document.createElement('div');meta.className='meta';const who=document.createElement('span');who.textContent=m.username?'@'+m.username:'Пользователь';const when=document.createElement('span');when.textContent=typeof m.createdAt==='number'?new Date(m.createdAt).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'}):'сейчас';meta.append(who,when);const body=document.createElement('div');body.className='body';body.textContent='🔒 Зашифрованное сообщение — разблокируй переписку';div.append(meta,body);$('#messages').append(div);$('#messages').scrollTop=$('#messages').scrollHeight;return {body,div}}
+async function displayMessage(m){const item=renderMessage(m);if(!String(m.text||'').startsWith('enc3:')){item.body.textContent='🔒 Старое сообщение из предыдущей версии. Оно зашифровано старым ключом и не откроется автоматически.';return}if(cryptoKey){try{const plain=await decryptText(m.text,cryptoKey);let payload;try{payload=JSON.parse(plain)}catch{}if(payload?.kind==='media'&&typeof payload.data==='string'&&payload.data.startsWith('data:image/')){const img=document.createElement('img');img.src=payload.data;img.alt=payload.name||'Изображение';img.className='mediaMessage';img.loading='lazy';item.body.replaceChildren(img);if(payload.caption){const cap=document.createElement('div');cap.textContent=payload.caption;item.body.append(cap)}}else if(payload?.kind==='sticker'&&typeof payload.emoji==='string'){item.body.textContent=payload.emoji;item.body.classList.add('stickerMessage')}else item.body.textContent=plain}catch{item.body.textContent='🔒 Не удалось расшифровать это сообщение. Ключи устройств могли измениться.'}}else item.body.textContent='🔒 Зашифрованное сообщение — ждём второй ключ';}
+function watchPeerPresence(uid){
+ if(peerPresenceListener){peerPresenceListener();peerPresenceListener=null}
+ const statusEl=$('#peerPresence'),avatar=$('#peerAvatar');
+ statusEl.textContent='Проверяем статус…';statusEl.classList.remove('online');avatar.classList.remove('is-online');
+ peerPresenceListener=onValue(ref(db,'users/'+uid+'/online'),snap=>{
+  if(!activePeer||activePeer.uid!==uid)return;
+  const online=snap.val()===true;
+  statusEl.textContent=online?'В сети':'Не в сети';
+  statusEl.classList.toggle('online',online);avatar.classList.toggle('is-online',online);
+ },err=>{statusEl.textContent='Статус недоступен';console.warn('Presence read failed:',err)});
+}
+function startOwnPresence(uid){
+ if(ownPresenceUid===uid&&ownPresenceListener)return;
+ if(ownPresenceListener){ownPresenceListener();ownPresenceListener=null}
+ ownPresenceUid=uid;
+ ownPresenceListener=onValue(ref(db,'.info/connected'),async snap=>{
+  if(!user||user.uid!==uid||snap.val()!==true)return;
+  const ownRef=ref(db,'users/'+uid+'/online');
+  try{await onDisconnect(ownRef).set(false);if(user&&user.uid===uid)await set(ownRef,true)}
+  catch(e){console.warn('Не удалось обновить статус онлайн. Проверь правила Firebase:',e)}
+ });
+}
+function stopOwnPresence(){
+ if(ownPresenceListener){ownPresenceListener();ownPresenceListener=null}
+ ownPresenceUid='';
+ if(peerPresenceListener){peerPresenceListener();peerPresenceListener=null}
+ for(const stop of presenceListeners)stop();presenceListeners=[];
+}
+function profileLabel(profile,username){return String(profile?.nickname||'').trim()||('@'+String(username||profile?.username||'пользователь').replace(/^@/,''))}
+function setAvatarElement(el,profile,username){el.replaceChildren();const avatar=profile?.avatar;if(typeof avatar==='string'&&avatar.startsWith('data:image/')){const img=document.createElement('img');img.src=avatar;img.alt='';el.append(img)}else el.textContent=profileLabel(profile,username).replace(/^@/,'').slice(0,1).toUpperCase()||'R'}
+function refreshOwnProfileUI(){const label=profileLabel(myProfile,myUsername);$('#profileAvatarPreview').classList.remove('is-online');setAvatarElement($('#profileAvatarPreview'),myProfile,myUsername);$('#profileNickname').value=myProfile.nickname||'';$('#profileBio').value=myProfile.bio||'';$('#profileBioCount').textContent=String(($('#profileBio').value||'').length);selectedAvatarData=myProfile.avatar||''}
+function imageFileToDataURL(file){return new Promise((resolve,reject)=>{if(!file.type.startsWith('image/'))return reject(Error('Выбери файл изображения.'));if(file.size>5*1024*1024)return reject(Error('Файл должен быть не больше 5 МБ.'));const reader=new FileReader();reader.onerror=()=>reject(Error('Не удалось прочитать изображение.'));reader.onload=()=>{const img=new Image();img.onerror=()=>reject(Error('Не удалось открыть изображение.'));img.onload=()=>{const canvas=document.createElement('canvas'),scale=Math.min(1,256/Math.max(img.width,img.height));canvas.width=Math.max(1,Math.round(img.width*scale));canvas.height=Math.max(1,Math.round(img.height*scale));const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0,canvas.width,canvas.height);resolve(canvas.toDataURL('image/jpeg',0.78))};img.src=reader.result};reader.readAsDataURL(file)})}
+function openProfile(){if(!user){say('Сначала войди в аккаунт.');return}refreshOwnProfileUI();$('#profileError').textContent='';$('#profileOverlay').classList.remove('hidden');$('#menuPanel').classList.add('hidden')}
+$('#openProfile').addEventListener('click',openProfile);
+$('#closeProfile').addEventListener('click',()=>$('#profileOverlay').classList.add('hidden'));
+$('#profileBio').addEventListener('input',()=>$('#profileBioCount').textContent=String($('#profileBio').value.length));
+$('#avatarFile').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;$('#profileError').textContent='Обрабатываем изображение…';try{selectedAvatarData=await imageFileToDataURL(file);setAvatarElement($('#profileAvatarPreview'),{avatar:selectedAvatarData,nickname:$('#profileNickname').value},myUsername);$('#profileError').textContent='Аватарка готова к сохранению.'}catch(err){$('#profileError').textContent=err.message;e.target.value=''}});
+$('#saveProfile').addEventListener('click',async()=>{if(!user||!db)return;const nickname=$('#profileNickname').value.trim(),bio=$('#profileBio').value.trim();if(nickname.length>32||bio.length>160){$('#profileError').textContent='Проверь длину ника и описания.';return}if(selectedAvatarData&&selectedAvatarData.length>180000){$('#profileError').textContent='Аватарка слишком большая после обработки. Выбери другое изображение.';return}const button=$('#saveProfile');button.disabled=true;$('#profileError').textContent='Сохраняем…';try{const patch={nickname,bio,avatar:selectedAvatarData||''};await Promise.all(Object.entries(patch).map(([k,v])=>set(ref(db,'users/'+user.uid+'/'+k),v)));myProfile={...myProfile,...patch};if(activePeer?.uid===user.uid){activePeer.profile={...myProfile};}$('#profileError').textContent='Профиль сохранён.';await loadChatList();if(activePeer){const peerSnap=await get(ref(db,'users/'+activePeer.uid));if(peerSnap.exists())renderPeerProfile(peerSnap.val(),activePeer.username)}setTimeout(()=>$('#profileOverlay').classList.add('hidden'),450)}catch(err){$('#profileError').textContent='Не удалось сохранить. Проверь правила Firebase: '+err.message}finally{button.disabled=false}});
+function renderPeerProfile(profile,username){const label=profileLabel(profile,username);$('#peerName').textContent=label;$('#peerHandle').textContent='@'+String(username||profile?.username||'пользователь').replace(/^@/,'')+(profile?.bio?' · '+profile.bio:'');setAvatarElement($('#peerAvatar'),profile,username)}
+async function startChat(peerUid,peerUsername){
+ if(!user||peerUid===user.uid){$('#searchStatus').textContent=peerUid===user?.uid?'Это твой собственный юзернейм.':'Сначала дождись подключения.';return}
+ const id=chatId(user.uid,peerUid);
+ // Ignore a second tap while this same chat is already open.
+ if(activeChatId===id&&document.querySelector('.app').classList.contains('chat-open'))return;
+ if(keyExchangeListener){keyExchangeListener();keyExchangeListener=null}
+ if(messagesListener){messagesListener();messagesListener=null}
+ document.querySelector('.app').classList.add('chat-open');activePeer={uid:peerUid,username:peerUsername,profile:{username:peerUsername}};activeChatId=id;cryptoKey=null;exchangeStartedFor='';try{const ps=await get(ref(db,'users/'+peerUid));if(ps.exists())activePeer.profile=ps.val()}catch{}renderPeerProfile(activePeer.profile,peerUsername);$('#peerHandle').textContent='@'+String(peerUsername||'пользователь').replace(/^@/,'')+(activePeer.profile?.bio?' · '+activePeer.profile.bio:'');watchPeerPresence(peerUid);$('#text').disabled=true;$('#send').disabled=true;$('#attachButton').disabled=true;$('#stickerButton').disabled=true;$('#security').className='security wait';$('#security').textContent='Открываем переписку и создаём ключи…';seen=new Set();cached=new Map();first=true;showEmpty('Подключаем зашифрованную переписку…');
+ try{const metaRef=ref(db,'conversationMeta/'+id);const meta=await get(metaRef);if(activeChatId!==id)return;if(!meta.exists()){const members={};members[user.uid]=true;members[peerUid]=true;await set(metaRef,{members,createdAt:serverTimestamp()})}await loadChatList();if(activeChatId!==id)return;const q=query(ref(db,'messages/'+id),orderByChild('createdAt'),limitToLast(100));messagesListener=onChildAdded(q,snap=>{const m=snap.val();if(!m||seen.has(snap.key)||activeChatId!==id)return;seen.add(snap.key);cached.set(snap.key,m);if(first){$('#messages').innerHTML='';first=false}displayMessage(m)});await beginKeyExchange();}
+ catch(e){if(activeChatId!==id)return;showEmpty('Не удалось открыть переписку. Проверь правила Firebase.');$('#security').className='security warn';$('#security').textContent='Ошибка: '+e.message;say('Ошибка: '+e.message)}
+}
+async function loadChatList(){if(!user||!db)return;const token=++chatListLoadToken;for(const stop of presenceListeners)stop();presenceListeners=[];try{const snap=await get(ref(db,'conversationMeta'));if(token!==chatListLoadToken)return;const items=[];snap.forEach(child=>{const v=child.val();if(v?.members?.[user.uid]){const other=Object.keys(v.members).find(uid=>uid!==user.uid);if(other)items.push({id:child.key,uid:other})}});$('#chats').innerHTML='';$('#chatCount').textContent=String(items.length)+' чатов';if(!items.length){showChatListEmpty();return}for(const item of items){let profile;try{const p=await get(ref(db,'users/'+item.uid));profile=p.val()||{username:'пользователь'}}catch{profile={username:'пользователь'}}if(token!==chatListLoadToken)return;const b=document.createElement('div');b.className='useritem'+(activePeer?.uid===item.uid?' active':'');b.dataset.username=String(profile.username||'пользователь').toLowerCase();b.dataset.nickname=String(profile.nickname||'').toLowerCase();const a=document.createElement('div');a.className='avatar';setAvatarElement(a,profile,profile.username);const info=document.createElement('div');info.className='uinfo';const name=document.createElement('div');name.className='uname';name.textContent=profileLabel(profile,profile.username);const handle=document.createElement('div');handle.className='handle';handle.textContent='@'+(profile.username||'пользователь');info.append(name,handle);b.append(a,info);const stop=onValue(ref(db,'users/'+item.uid+'/online'),presenceSnap=>{if(token!==chatListLoadToken||!a.isConnected)return;a.classList.toggle('is-online',presenceSnap.val()===true)});presenceListeners.push(stop);b.addEventListener('click',()=>startChat(item.uid,profile.username||'пользователь'));$('#chats').append(b)}}catch(e){if(token===chatListLoadToken)say('Не удалось загрузить переписки: '+e.message)}}
+function showChatListEmpty(){const d=document.createElement('div');d.className='empty';d.textContent='Переписок пока нет. Найди человека по юзернейму.';$('#chats').append(d)}
+function authEmail(name){return name.toLowerCase()+'@relaxgram.app'}
+function showAuthError(message){$('#authError').textContent=message}
+function openAuth(){ $('#authOverlay').classList.remove('hidden'); }
+function closeAuth(){ $('#authOverlay').classList.add('hidden'); }
+function showSettings(){ if(!myUsername){say('Сначала войди в аккаунт.');return} $('#newUsername').value=myUsername;$('#settingsError').textContent='';$('#themeSelect').value=document.body.dataset.theme||'dark';$('#settingsOverlay').classList.remove('hidden');$('#menuPanel').classList.add('hidden'); }
+function themeApply(theme){if(!['dark','light','midnight'].includes(theme))theme='dark';document.body.dataset.theme=theme;try{localStorage.setItem('relaxgram-theme',theme)}catch{};}
+try{themeApply(localStorage.getItem('relaxgram-theme')||'dark')}catch{themeApply('dark')}
+$('#menuButton').addEventListener('click',()=>$('#menuPanel').classList.toggle('hidden'));
+document.addEventListener('click',e=>{if(!e.target.closest('.menuWrap'))$('#menuPanel').classList.add('hidden')});
+$('#openSettings').addEventListener('click',showSettings);
+$('#changeUsernameMenu').addEventListener('click',showSettings);
+$('#closeSettings').addEventListener('click',()=>$('#settingsOverlay').classList.add('hidden'));
+$('#themeSelect').addEventListener('change',e=>themeApply(e.target.value));
+$('#authUsername').addEventListener('keydown',e=>{if(e.key==='Enter')$('#authPassword').focus()});
+$('#authPassword').addEventListener('keydown',e=>{if(e.key==='Enter')$('#loginButton').click()});
+async function claimUsername(name,uid){const claim=await runTransaction(ref(db,'usernames/'+name),current=>current===null?uid:undefined);if(!claim.committed)throw Error('Этот юзернейм уже занят. Выбери другой.');await set(ref(db,'users/'+uid),{username:name,createdAt:serverTimestamp()});}
+$('#registerButton').addEventListener('click',async()=>{if(!db||!auth)return;const name=$('#authUsername').value.normalize('NFKC').replace(/[\u200B-\u200D\uFEFF]/g,'').trim().toLowerCase(),password=$('#authPassword').value;if(!validUsername(name)){showAuthError('Юзернейм: 3–20 символов, только латинские буквы, цифры и _.');return}if(password.length<8){showAuthError('Пароль должен содержать не менее 8 символов.');return}$('#registerButton').disabled=true;showAuthError('Создаём аккаунт…');let created=null;accountSetupInProgress=true;try{const credential=await createUserWithEmailAndPassword(auth,authEmail(name),password);created=credential.user;const exists=await get(ref(db,'usernames/'+name));if(exists.exists())throw Error('Этот юзернейм уже занят.');await claimUsername(name,created.uid);myUsername=name;myProfile={nickname:'',bio:'',avatar:''};user=created;startOwnPresence(created.uid);accountSetupInProgress=false;closeAuth();showAuthError('');status('Ты вошёл как @'+name);try{await publishAccountPublicKey()}catch(keyErr){say('Аккаунт создан, но ключ не опубликован: '+keyErr.message)}say('Аккаунт создан. Добро пожаловать!');await loadChatList()}catch(e){accountSetupInProgress=false;if(created){try{await deleteUser(created)}catch{}}showAuthError(firebaseMessage(e))}finally{$('#registerButton').disabled=false}});
+$('#loginButton').addEventListener('click',async()=>{if(!db||!auth)return;const name=$('#authUsername').value.normalize('NFKC').trim().toLowerCase(),password=$('#authPassword').value;if(!validUsername(name)||!password){showAuthError('Введи корректный юзернейм и пароль.');return}$('#loginButton').disabled=true;showAuthError('Входим…');try{const credential=await signInWithEmailAndPassword(auth,authEmail(name),password);user=credential.user;const profile=await get(ref(db,'users/'+user.uid));if(!profile.exists())throw Error('Профиль не найден. Попробуй создать аккаунт.');myUsername=profile.val().username||name;myProfile={nickname:profile.val().nickname||'',bio:profile.val().bio||'',avatar:profile.val().avatar||''};closeAuth();status('Ты вошёл как @'+myUsername);say('С возвращением, @'+myUsername);await loadChatList()}catch(e){showAuthError(firebaseMessage(e))}finally{$('#loginButton').disabled=false}});
+function firebaseMessage(e){const code=e?.code||'';if(code==='auth/email-already-in-use')return 'Аккаунт уже существует. Нажми «Войти».';if(code==='auth/invalid-credential'||code==='auth/wrong-password'||code==='auth/user-not-found')return 'Неверный юзернейм или пароль.';if(code==='auth/operation-not-allowed')return 'В Firebase Console включи Authentication → Sign-in method → Email/Password.';if(code==='auth/weak-password')return 'Слишком простой пароль. Используй не менее 8 символов.';if(code==='auth/network-request-failed')return 'Нет соединения с Firebase. Проверь интернет.';return e?.message||'Не удалось выполнить действие.'}
+$('#logoutButton').addEventListener('click',async()=>{if(!auth)return;try{if(user&&db){try{await set(ref(db,'users/'+user.uid+'/online'),false)}catch{}}stopOwnPresence();if(messagesListener){messagesListener();messagesListener=null}if(keyExchangeListener){keyExchangeListener();keyExchangeListener=null}chatListLoadToken++;await signOut(auth);user=null;myUsername='';myProfile={nickname:'',bio:'',avatar:''};activePeer=null;activeChatId='';cryptoKey=null;document.querySelector('.app').classList.remove('chat-open');$('#menuPanel').classList.add('hidden');showEmpty('Войди в аккаунт, чтобы увидеть свои переписки.');openAuth();status('Не выполнен вход')}catch(e){say('Не удалось выйти: '+e.message)}});
+$('#saveUsername').addEventListener('click',async()=>{if(!user||!myUsername)return;const next=$('#newUsername').value.normalize('NFKC').trim().toLowerCase();if(!validUsername(next)){$('#settingsError').textContent='Юзернейм должен быть длиной 3–20 символов: a–z, 0–9 и _.';return}if(next===myUsername){$('#settingsError').textContent='Это уже твой юзернейм.';return}$('#saveUsername').disabled=true;$('#settingsError').textContent='Сохраняем…';try{const exists=await get(ref(db,'usernames/'+next));if(exists.exists())throw Error('Этот юзернейм уже занят.');await updateEmail(user,authEmail(next));const claim=await runTransaction(ref(db,'usernames/'+next),current=>current===null?user.uid:undefined);if(!claim.committed)throw Error('Этот юзернейм уже занят.');await set(ref(db,'users/'+user.uid+'/username'),next);await remove(ref(db,'usernames/'+myUsername));myUsername=next;$('#settingsError').textContent='Юзернейм изменён. Теперь входи с @'+next;status('Ты вошёл как @'+next);await loadChatList()}catch(e){$('#settingsError').textContent=firebaseMessage(e)}finally{$('#saveUsername').disabled=false}});
+if(Object.values(firebaseConfig).some(v=>String(v).startsWith('PASTE_'))){status('Нужно настроить Firebase');showEmpty('Проверь конфигурацию Firebase.')}else try{const app=initializeApp(firebaseConfig);auth=getAuth(app);db=getDatabase(app);onAuthStateChanged(auth,async u=>{user=u;if(!u){stopOwnPresence();myUsername='';$('#peerPresence').textContent='';$('#peerAvatar').classList.remove('is-online');openAuth();status('Войди или создай аккаунт');return}try{const p=await get(ref(db,'users/'+u.uid));if(p.exists()){startOwnPresence(u.uid);myUsername=p.val().username||'';myProfile={nickname:p.val().nickname||'',bio:p.val().bio||'',avatar:p.val().avatar||''};closeAuth();status('Ты вошёл как @'+myUsername);try{await publishAccountPublicKey()}catch(keyErr){say('Не удалось опубликовать открытый ключ: '+keyErr.message)}await loadChatList()}else if(!accountSetupInProgress){await signOut(auth);openAuth()}}catch(e){status('Ошибка базы: '+e.message);openAuth()}})}catch(e){status('Ошибка Firebase: '+e.message);showAuthError(firebaseMessage(e))}
+$('#search').addEventListener('input',()=>{const q=$('#search').value.trim().replace(/^@/,'').toLowerCase();let visible=0;for(const item of $('#chats').querySelectorAll('.useritem')){const match=!q||String(item.dataset.username||'').includes(q)||String(item.dataset.nickname||'').includes(q);item.classList.toggle('hidden',!match);if(match)visible++}let empty=$('#chatFilterEmpty');if(q&&visible===0){if(!empty){empty=document.createElement('div');empty.id='chatFilterEmpty';empty.className='empty';$('#chats').append(empty)}empty.textContent='В переписках никого не найдено. Нажми ↗ или Enter, чтобы найти пользователя по юзернейму.'}else if(empty)empty.remove();$('#searchStatus').textContent='';});
+$('#backToChats').addEventListener('click',()=>{document.querySelector('.app').classList.remove('chat-open');$('#search').blur();});
+$('#find').addEventListener('click',async()=>{if(!user||!db)return;const name=$('#search').value.trim().replace(/^@/,'').toLowerCase();if(!validUsername(name)){ $('#searchStatus').textContent='Введи юзернейм из 3–20 допустимых символов.';return}$('#find').disabled=true;try{const idx=await get(ref(db,'usernames/'+name));if(!idx.exists()){$('#searchStatus').textContent='Пользователь @'+name+' не найден.';return}const uid=idx.val();if(uid===user.uid){$('#searchStatus').textContent='Это твой собственный юзернейм.';return}const profile=await get(ref(db,'users/'+uid));if(!profile.exists()){$('#searchStatus').textContent='Профиль пока недоступен.';return}$('#searchStatus').textContent='Найден @'+name+'. Открываем личный чат…';await startChat(uid,name)}catch(e){$('#searchStatus').textContent='Ошибка поиска: '+e.message}finally{$('#find').disabled=false}});
+$('#search').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('#find').click()}});
+async function sendEncryptedPayload(payload){if(!user||!db||!cryptoKey||!activeChatId||!activePeer)throw Error('Сначала открой чат и дождись включения шифрования.');const encrypted=await encryptText(typeof payload==='string'?payload:JSON.stringify(payload),cryptoKey);await set(ref(db,'messages/'+activeChatId+'/'+crypto.randomUUID()),{uid:user.uid,username:myUsername,text:encrypted,createdAt:serverTimestamp()})}
+$('#form').addEventListener('submit',async e=>{e.preventDefault();const text=$('#text').value.trim();if(!text||!user||!db||!cryptoKey||!activeChatId||!activePeer)return;$('#send').disabled=true;try{await sendEncryptedPayload(text);$('#text').value=''}catch(err){say('Не отправлено: '+err.message)}finally{$('#send').disabled=!cryptoKey;$('#text').focus()}});
+$('#attachButton').addEventListener('click',()=>{mediaNotice('Выбери фото из галереи…');$('#mediaFile').click()});
+async function prepareChatImage(file){
+ const readFile=f=>new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=()=>reject(Error('Не удалось прочитать файл.'));r.readAsDataURL(f)});
+ const isGif=file.type==='image/gif'||file.name.toLowerCase().endsWith('.gif');
+ if(isGif){if(file.size>420*1024)throw Error('GIF слишком большой (максимум 420 КБ). Выбери GIF поменьше.');return {data:await readFile(file),mime:'image/gif',name:file.name}}
+ if(!file.type.startsWith('image/'))throw Error('Выбери файл изображения.');
+ const source=await readFile(file);
+ const img=await new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=()=>reject(Error('Телефон не смог открыть этот формат. Попробуй JPG или PNG.'));i.src=source});
+ const scale=Math.min(1,1280/Math.max(img.naturalWidth,img.naturalHeight));
+ const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(img.naturalWidth*scale));canvas.height=Math.max(1,Math.round(img.naturalHeight*scale));
+ const ctx=canvas.getContext('2d');if(!ctx)throw Error('Не удалось обработать изображение.');ctx.drawImage(img,0,0,canvas.width,canvas.height);
+ let data=canvas.toDataURL('image/jpeg',0.78);for(let q=0.68;data.length>560*1024&&q>=0.38;q-=0.1)data=canvas.toDataURL('image/jpeg',q);
+ if(data.length>560*1024)throw Error('Фото слишком большое даже после сжатия. Попробуй другое фото.');
+ return {data,mime:'image/jpeg',name:file.name.replace(/\.[^.]+$/,'')+'.jpg'};
+}
+$('#mediaFile').addEventListener('change',async()=>{
+ const input=$('#mediaFile'),file=input.files?.[0];input.value='';if(!file)return;
+ if(!cryptoKey||!activeChatId||!activePeer){mediaNotice('Сначала открой чат и дождись надписи «Шифрование включено».',true);return}
+ const button=$('#attachButton');button.disabled=true;mediaNotice('Подготавливаем фото…');
+ try{const prepared=await prepareChatImage(file);mediaNotice('Отправляем изображение…');await sendEncryptedPayload({kind:'media',mime:prepared.mime,name:prepared.name,data:prepared.data});mediaNotice('Изображение отправлено ✓')}
+ catch(err){mediaNotice('Не удалось отправить: '+(err?.message||String(err)),true);say('Не удалось отправить изображение: '+(err?.message||String(err)))}
+ finally{button.disabled=!cryptoKey}
+});
+const stickerSet=['😀','😂','🥹','😍','😎','😭','🤔','😴','👍','👎','❤️','🔥','🎉','🤝','💯','👀','🐱','🐸','🐼','🦊','💀','✨','🙏','💖'];
+for(const emoji of stickerSet){const b=document.createElement('button');b.type='button';b.textContent=emoji;b.title='Отправить стикер '+emoji;b.addEventListener('click',async()=>{if(!cryptoKey||!activeChatId||!activePeer)return;$('#stickerPanel').classList.add('hidden');$('#stickerButton').disabled=true;try{await sendEncryptedPayload({kind:'sticker',emoji})}catch(err){say('Не удалось отправить стикер: '+err.message)}finally{$('#stickerButton').disabled=!cryptoKey}});$('#stickerPanel').append(b)}
+$('#stickerButton').addEventListener('click',()=>$('#stickerPanel').classList.toggle('hidden'));
+document.addEventListener('click',e=>{if(!e.target.closest('#stickerPanel')&&!e.target.closest('#stickerButton'))$('#stickerPanel').classList.add('hidden')});
+</script><script>
+(()=>{const $=s=>document.querySelector(s);
+const on=id=>{document.querySelectorAll('.sideNav button').forEach(b=>b.classList.toggle('on',b.id===id))};
+$('#navChats').addEventListener('click',()=>{on('navChats');$('#backToChats').click()});
+$('#navProfile').addEventListener('click',()=>$('#openProfile').click());
+$('#navSettings').addEventListener('click',()=>$('#openSettings').click());
+$('#navLogout').addEventListener('click',()=>$('#logoutButton').click());
+$('#search').addEventListener('blur',()=>on('navChats'));
+})();
+</script></body></html>
