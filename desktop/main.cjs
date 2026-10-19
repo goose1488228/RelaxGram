@@ -1,4 +1,6 @@
-const { app, BrowserWindow, shell } = require('electron');
+const { app, BrowserWindow, shell, session } = require('electron');
+
+const APP_URL = 'https://goose1488228.github.io/RelaxGram/';
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -10,6 +12,8 @@ function createWindow() {
     autoHideMenuBar: true,
     backgroundColor: '#0a1020',
     webPreferences: {
+      // Keep site storage (IndexedDB/localStorage) between app launches.
+      partition: 'persist:relaxgram',
       contextIsolation: true,
       nodeIntegration: false,
       sandbox: true
@@ -17,17 +21,22 @@ function createWindow() {
   });
 
   win.webContents.setWindowOpenHandler(({ url }) => {
-    if (url.startsWith('https://goose1488228.github.io/RelaxGram/')) {
-      return { action: 'allow' };
-    }
+    if (url.startsWith(APP_URL)) return { action: 'allow' };
     if (url.startsWith('https://')) shell.openExternal(url);
     return { action: 'deny' };
   });
 
-  win.loadURL('https://goose1488228.github.io/RelaxGram/');
+  // The Chromium disk cache is kept in the persistent app session.
+  win.loadURL(APP_URL);
 }
 
 app.whenReady().then(() => {
+  const appSession = session.fromPartition('persist:relaxgram');
+  appSession.setPermissionRequestHandler((_webContents, permission, callback) => {
+    // Do not grant permissions such as camera or microphone automatically.
+    callback(false);
+  });
+
   createWindow();
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
