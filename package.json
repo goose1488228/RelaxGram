@@ -1,0 +1,38 @@
+{
+  "name": "relaxgram-desktop",
+  "version": "1.0.0",
+  "description": "RelaxGram desktop app for Windows",
+  "main": "desktop/main.cjs",
+  "author": "RelaxGram",
+  "license": "UNLICENSED",
+  "scripts": {
+    "dist:win": "electron-builder --win nsis"
+  },
+  "devDependencies": {
+    "electron": "^39.0.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "app.relaxgram.desktop",
+    "productName": "RelaxGram",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "desktop/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "artifactName": "RelaxGram-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}
